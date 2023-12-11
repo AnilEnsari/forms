@@ -49,19 +49,18 @@ try {
 
 //delete
 
-public function delete($id){
-try {
-    $stmt =$this->conn->prepare("DELETE FROM crud_users WHERE id = :id");
-    $stmt -> bindParam("id",$id);
-    return $stmt ;
-
-} catch (PDOException $e){
-    echo $e->getMessage();
-
-
+public function delete($id) {
+    try {
+        $stmt = $this->conn->prepare("DELETE FROM crud_users WHERE id = :id");
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);  // Use PDO::PARAM_INT for integer values
+        $stmt->execute();
+        return true;
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+        return false;
+    }
 }
 
-}
 
 public function redirect ($url){
     header("Location: $url");
